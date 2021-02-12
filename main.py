@@ -2,6 +2,7 @@ import sys
 import requests
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
+import sys, requests, os
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
 from PyQt5.QtCore import Qt
@@ -15,6 +16,9 @@ class Example(QMainWindow):
         uic.loadUi('main.ui', self)
         self.initUI()
 
+        self.radioButtonGroup.buttonClicked.connect(self.setView)
+        self.l, self.spn, self.ll = 'map', '0.05', '37.677751,55.757718'
+
         self.PgUpButton.clicked.connect(self.up_scale)
         self.PgDownButton.clicked.connect(self.down_scale)
         self.scale = 10
@@ -26,8 +30,8 @@ class Example(QMainWindow):
         self.pixmap = QPixmap('map_file.png')
         self.image.setPixmap(self.pixmap)
 
-    def getImage(self, ll, spn, l):
-        map_request = f"http://static-maps.yandex.ru/1.x/?ll={ll}&z={self.scale}&spn={spn},{spn}&l={l}"
+    def getImage(self):
+        map_request = f"http://static-maps.yandex.ru/1.x/?ll={self.ll}&z={self.scale}&spn={self.spn},{self.spn}&l={self.l}"
         self.response = requests.get(map_request)
         with open('map_file.png', "wb") as file:
             file.write(self.response.content)
@@ -49,6 +53,18 @@ class Example(QMainWindow):
     def down_scale(self):
         if self.scale > 0:
             self.scale -= 1
+
+    def setView(self, button):
+        if button == self.radioButton1:
+            self.l = 'map'
+        if button == self.radioButton2:
+            self.l = 'sat'
+        if button == self.radioButton3:
+            self.l = 'skl'
+        os.remove('map_file.png')
+        self.getImage()
+        self.pixmap = QPixmap('map_file.png')
+        self.image.setPixmap(self.pixmap)
 
 
 if __name__ == '__main__':
