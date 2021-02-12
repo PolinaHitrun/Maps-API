@@ -15,6 +15,9 @@ class Example(QMainWindow):
         uic.loadUi('main.ui', self)
         self.initUI()
 
+        self.PgUpButton.clicked.connect(self.up_scale)
+        self.PgDownButton.clicked.connect(self.down_scale)
+
 
     def initUI(self):
         self.setGeometry(50, 50, 620, 470)
@@ -37,6 +40,12 @@ class Example(QMainWindow):
             pass
         elif event.key() == Qt.Key_Right:
             pass
+
+    def up_scale(self):
+        pass
+
+    def down_scale(self):
+        pass
 
 
 if __name__ == '__main__':
