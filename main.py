@@ -15,6 +15,7 @@ class Example(QMainWindow):
         uic.loadUi('main.ui', self)
         self.initUI()
 
+
     def initUI(self):
         self.setGeometry(50, 50, 620, 470)
         self.getImage()
