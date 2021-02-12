@@ -17,6 +17,7 @@ class Example(QMainWindow):
 
         self.PgUpButton.clicked.connect(self.up_scale)
         self.PgDownButton.clicked.connect(self.down_scale)
+        self.scale = 10
 
 
     def initUI(self):
@@ -26,7 +27,7 @@ class Example(QMainWindow):
         self.image.setPixmap(self.pixmap)
 
     def getImage(self, ll, spn, l):
-        map_request = f"http://static-maps.yandex.ru/1.x/?ll={ll}&spn={spn},{spn}&l={l}"
+        map_request = f"http://static-maps.yandex.ru/1.x/?ll={ll}&z={self.scale}&spn={spn},{spn}&l={l}"
         self.response = requests.get(map_request)
         with open('map_file.png', "wb") as file:
             file.write(self.response.content)
@@ -42,10 +43,12 @@ class Example(QMainWindow):
             pass
 
     def up_scale(self):
-        pass
+        if self.scale < 17:
+            self.scale += 1
 
     def down_scale(self):
-        pass
+        if self.scale > 0:
+            self.scale -= 1
 
 
 if __name__ == '__main__':
