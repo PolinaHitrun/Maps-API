@@ -3,6 +3,7 @@ import requests
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
+from PyQt5.QtCore import Qt
 
 SCREEN_SIZE = 600, 450
 
@@ -26,6 +27,16 @@ class Example(QMainWindow):
         self.response = requests.get(map_request)
         with open('map_file.png', "wb") as file:
             file.write(self.response.content)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Up:
+            pass
+        elif event.key() == Qt.Key_Down:
+            pass
+        elif event.key() == Qt.Key_Left:
+            pass
+        elif event.key() == Qt.Key_Right:
+            pass
 
 
 if __name__ == '__main__':
