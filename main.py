@@ -22,8 +22,8 @@ class Example(QMainWindow):
         self.image.resize(*SCREEN_SIZE)
         self.image.setPixmap(self.pixmap)
 
-    def getImage(self):
-        map_request = "http://static-maps.yandex.ru/1.x/?ll=37.530887,55.703118&spn=0.05,0.05&l=map"
+    def getImage(self, ll, spn, l):
+        map_request = f"http://static-maps.yandex.ru/1.x/?ll={ll}&spn={spn},{spn}&l={l}"
         self.response = requests.get(map_request)
         with open('map_file.png', "wb") as file:
             file.write(self.response.content)
